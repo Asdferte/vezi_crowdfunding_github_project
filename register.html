@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Регистрация — вЕзи</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">
+        <div class="brand-mark">В</div>
+        <div>
+          <span class="brand-title">вЕзи</span>
+          <span class="brand-sub">краудфандинг</span>
+        </div>
+      </a>
+
+      <nav class="main-nav">
+        <a href="index.html" class="nav-link ">Каталог проектов</a>
+        <a href="initiator.html" class="nav-link ">Калькулятор сметы</a>
+        <a href="sponsor.html" class="nav-link ">Кабинет спонсора</a>
+        <a href="moderator.html" class="nav-link ">Модерация</a>
+        <a href="admin.html" class="nav-link ">Администрирование</a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="theme-switch">
+          <button type="button" class="theme-btn active" data-mode="light" onclick="setTheme('light')">Светлая</button>
+          <button type="button" class="theme-btn" data-mode="dark" onclick="setTheme('dark')">Тёмная</button>
+        </div>
+        <div id="headerUserArea" style="display:flex;align-items:center;gap:8px;"></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="auth-card">
+      <h1 class="panel-title" style="font-size:22px;">Регистрация нового участника</h1>
+      <p class="panel-sub">Данные сохраняются напрямую в таблицу пользователей базы данных</p>
+
+      <div id="regMsg"></div>
+
+      <form id="registerForm" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="regName">Фамилия, имя и отчество</label>
+          <input type="text" id="regName" class="input" placeholder="Соколов Артём Игоревич" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="regEmail">Электронная почта</label>
+          <input type="email" id="regEmail" class="input" placeholder="sokolov@mail.ru" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="regRole">Выберите роль на платформе</label>
+          <select id="regRole" class="select">
+            <option value="sponsor">Спонсор — поддержка проектов и заказ вознаграждений</option>
+            <option value="initiator">Автор проекта — создание сборов и расчёт сметы</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="regPass">Пароль (не менее 6 символов)</label>
+          <input type="password" id="regPass" class="input" placeholder="Минимум 6 символов" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="regPassConfirm">Повторите пароль</label>
+          <input type="password" id="regPassConfirm" class="input" placeholder="Повторите пароль" required>
+        </div>
+        <div class="form-group" style="display:flex;align-items:center;gap:8px;">
+          <input type="checkbox" id="regConsent" checked>
+          <label for="regConsent" style="font-size:12px;color:var(--text-sec);">
+            Согласен на обработку персональных данных и правила оферты
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Зарегистрироваться</button>
+      </form>
+
+      <p style="font-size:13px;text-align:center;margin-top:16px;color:var(--text-sec);">
+        Уже есть аккаунт? <a href="login.html" style="color:var(--accent);font-weight:700;">Войти</a>
+      </p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>Платформа «вЕзи» • Хранение данных на территории РФ • Расчёты через номинальные счета</div>
+      <div style="display:flex;gap:14px;">
+        <button type="button" class="btn btn-outline" style="padding:5px 10px;font-size:11px;" onclick="downloadDBJson()">Скачать файл db.json</button>
+        <button type="button" class="btn btn-outline" style="padding:5px 10px;font-size:11px;" onclick="resetDB()">Сбросить тестовые данные</button>
+      </div>
+    </div>
+  </footer>
+
+  <nav class="mobile-tabbar">
+    <a href="index.html" class="tabbar-item ">Каталог</a>
+    <a href="initiator.html" class="tabbar-item ">Калькулятор</a>
+    <a href="sponsor.html" class="tabbar-item ">Вклады</a>
+    <a href="moderator.html" class="tabbar-item ">Модерация</a>
+    <a href="login.html" class="tabbar-item active">Профиль</a>
+  </nav>
+  <script src="js/db.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', initRegisterPage);
+  </script>
+</body>
+</html>

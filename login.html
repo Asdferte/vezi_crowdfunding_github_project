@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вход в систему — вЕзи</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">
+        <div class="brand-mark">В</div>
+        <div>
+          <span class="brand-title">вЕзи</span>
+          <span class="brand-sub">краудфандинг</span>
+        </div>
+      </a>
+
+      <nav class="main-nav">
+        <a href="index.html" class="nav-link ">Каталог проектов</a>
+        <a href="initiator.html" class="nav-link ">Калькулятор сметы</a>
+        <a href="sponsor.html" class="nav-link ">Кабинет спонсора</a>
+        <a href="moderator.html" class="nav-link ">Модерация</a>
+        <a href="admin.html" class="nav-link ">Администрирование</a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="theme-switch">
+          <button type="button" class="theme-btn active" data-mode="light" onclick="setTheme('light')">Светлая</button>
+          <button type="button" class="theme-btn" data-mode="dark" onclick="setTheme('dark')">Тёмная</button>
+        </div>
+        <div id="headerUserArea" style="display:flex;align-items:center;gap:8px;"></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="auth-card">
+      <div id="alreadyLoggedBox" style="display:none;">
+        <div class="alert alert-error">
+          Вы уже авторизованы в системе. Повторный вход заблокирован, пока активна текущая сессия.
+        </div>
+        <p style="font-size:14px;margin-bottom:8px;">Текущий пользователь: <strong id="currentLoggedName"></strong></p>
+        <p style="font-size:13px;color:var(--text-sec);margin-bottom:18px;">Роль: <span id="currentLoggedRole" class="badge badge-emerald"></span></p>
+        <div style="display:flex;gap:10px;">
+          <a id="goCabinetBtn" href="index.html" class="btn btn-primary" style="flex:1;">Перейти в кабинет</a>
+          <button type="button" class="btn btn-danger" onclick="logoutUser()">Выйти из аккаунта</button>
+        </div>
+      </div>
+
+      <div id="loginFormWrap">
+        <h1 class="panel-title" style="font-size:22px;">Вход в личный кабинет</h1>
+        <p class="panel-sub">Авторизация доступна для зарегистрированных участников из базы данных</p>
+
+        <div id="loginMsg"></div>
+
+        <form id="loginForm" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="loginEmail">Электронная почта</label>
+            <input type="email" id="loginEmail" class="input" placeholder="author@vezi.ru" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="loginPassword">Пароль</label>
+            <input type="password" id="loginPassword" class="input" placeholder="Введите пароль" required>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;margin-top:8px;">Войти в систему</button>
+        </form>
+
+        <div style="margin-top:22px;padding-top:16px;border-top:1px solid var(--border);">
+          <div style="font-size:12px;font-weight:700;color:var(--text-sec);margin-bottom:10px;">
+            Быстрый вход по ролям из файла db.json (пароль: password123):
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <button type="button" class="btn btn-outline" onclick="quickLogin('sponsor@mail.ru')">Спонсор (Смирнов А.П.)</button>
+            <button type="button" class="btn btn-outline" onclick="quickLogin('author@vezi.ru')">Автор (Иванов И.А.)</button>
+            <button type="button" class="btn btn-outline" onclick="quickLogin('moderator@vezi.ru')">Модератор (Карцев М.С.)</button>
+            <button type="button" class="btn btn-outline" onclick="quickLogin('admin@vezi.ru')">Админ (Кузнецов Д.О.)</button>
+          </div>
+        </div>
+
+        <p style="font-size:13px;text-align:center;margin-top:18px;color:var(--text-sec);">
+          Нет аккаунта? <a href="register.html" style="color:var(--accent);font-weight:700;">Зарегистрироваться</a>
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>Платформа «вЕзи» • Хранение данных на территории РФ • Расчёты через номинальные счета</div>
+      <div style="display:flex;gap:14px;">
+        <button type="button" class="btn btn-outline" style="padding:5px 10px;font-size:11px;" onclick="downloadDBJson()">Скачать файл db.json</button>
+        <button type="button" class="btn btn-outline" style="padding:5px 10px;font-size:11px;" onclick="resetDB()">Сбросить тестовые данные</button>
+      </div>
+    </div>
+  </footer>
+
+  <nav class="mobile-tabbar">
+    <a href="index.html" class="tabbar-item ">Каталог</a>
+    <a href="initiator.html" class="tabbar-item ">Калькулятор</a>
+    <a href="sponsor.html" class="tabbar-item ">Вклады</a>
+    <a href="moderator.html" class="tabbar-item ">Модерация</a>
+    <a href="login.html" class="tabbar-item active">Профиль</a>
+  </nav>
+  <script src="js/db.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', initLoginPage);
+  </script>
+</body>
+</html>

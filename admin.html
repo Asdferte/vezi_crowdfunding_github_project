@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Панель администратора — вЕзи</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">
+        <div class="brand-mark">В</div>
+        <div>
+          <span class="brand-title">вЕзи</span>
+          <span class="brand-sub">краудфандинг</span>
+        </div>
+      </a>
+
+      <nav class="main-nav">
+        <a href="index.html" class="nav-link ">Каталог проектов</a>
+        <a href="initiator.html" class="nav-link ">Калькулятор сметы</a>
+        <a href="sponsor.html" class="nav-link ">Кабинет спонсора</a>
+        <a href="moderator.html" class="nav-link ">Модерация</a>
+        <a href="admin.html" class="nav-link active">Администрирование</a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="theme-switch">
+          <button type="button" class="theme-btn active" data-mode="light" onclick="setTheme('light')">Светлая</button>
+          <button type="button" class="theme-btn" data-mode="dark" onclick="setTheme('dark')">Тёмная</button>
+        </div>
+        <div id="headerUserArea" style="display:flex;align-items:center;gap:8px;"></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-bottom:40px;margin-top:24px;">
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-card-label">Общий объём сборов</div>
+        <div class="kpi-card-val" id="adminGmvVal">752 700 ₽</div>
+        <div class="kpi-card-sub">Актуальные данные из базы</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-card-label">Доля успешных проектов</div>
+        <div class="kpi-card-val" style="color:var(--accent);">68,4%</div>
+        <div class="kpi-card-sub">Кампании, набравшие 100% цели</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-card-label">Средний вклад спонсора</div>
+        <div class="kpi-card-val" style="color:var(--blue);" id="adminAvgPledge">5 000 ₽</div>
+        <div class="kpi-card-sub">По проведённым операциям</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-card-label">Возвраты по несостоявшимся</div>
+        <div class="kpi-card-val" style="color:var(--amber);">100%</div>
+        <div class="kpi-card-sub">Без удержания комиссий</div>
+      </div>
+    </div>
+
+    <div class="two-col-layout">
+      <section style="display:flex;flex-direction:column;gap:20px;">
+        <div class="panel">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <h2 class="panel-title" style="margin:0;">Управление пользователями и ролями</h2>
+            <button type="button" class="btn btn-outline" style="font-size:12px;padding:6px 12px;" onclick="downloadDBJson()">Экспорт db.json</button>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Пользователь</th>
+                  <th>Электронная почта</th>
+                  <th>Роль</th>
+                  <th>Статус проверки</th>
+                  <th>Смена роли</th>
+                </tr>
+              </thead>
+              <tbody id="adminUsersTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2 class="panel-title">Журнал платёжных транзакций</h2>
+          <p class="panel-sub">Все операции резервирования из таблицы транзакций</p>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>№</th>
+                  <th>Платёж</th>
+                  <th>Тип операции</th>
+                  <th>Сумма</th>
+                  <th>Код квитанции</th>
+                  <th>Время</th>
+                </tr>
+              </thead>
+              <tbody id="adminTransactionsTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel">
+        <h2 class="panel-title">Системные комиссии и лимиты</h2>
+        <p class="panel-sub">Параметры используются в калькуляторе расчёта сметы</p>
+
+        <div class="form-group">
+          <label class="form-label">Комиссия платформы при успешном сборе, %</label>
+          <input type="number" class="input" value="5.0" step="0.5">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Комиссия платёжного шлюза и эквайринга, %</label>
+          <input type="number" class="input" value="3.0" step="0.5">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Обязательный коридор резерва на риски</label>
+          <input type="text" class="input" value="от 5,0 % до 10,0 %" readonly>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Минимальная сумма цели проекта, ₽</label>
+          <input type="number" class="input" value="10000" step="1000">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Допустимая задержка отчёта по этапу, дней</label>
+          <input type="number" class="input" value="30">
+        </div>
+
+        <button type="button" class="btn btn-primary" style="width:100%;margin-top:10px;" onclick="alert('Системные настройки сохранены.')">
+          Сохранить настройки платформы
+        </button>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>Платформа «вЕзи» • Хранение данных на территории РФ • Расчёты через номинальные счета</div>
+      <div style="display:flex;gap:14px;">
+        <button type="button" class="btn btn-outline" style="padding:5px 10px;font-size:11px;" onclick="downloadDBJson()">Скачать файл db.json</button>
+        <button type="button" class="btn btn-outline" style="padding:5px 10px;font-size:11px;" onclick="resetDB()">Сбросить тестовые данные</button>
+      </div>
+    </div>
+  </footer>
+
+  <nav class="mobile-tabbar">
+    <a href="index.html" class="tabbar-item ">Каталог</a>
+    <a href="initiator.html" class="tabbar-item ">Калькулятор</a>
+    <a href="sponsor.html" class="tabbar-item ">Вклады</a>
+    <a href="moderator.html" class="tabbar-item ">Модерация</a>
+    <a href="login.html" class="tabbar-item active">Профиль</a>
+  </nav>
+  <script src="js/db.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

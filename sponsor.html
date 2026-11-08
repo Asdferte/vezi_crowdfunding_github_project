@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Личный кабинет спонсора — вЕзи</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">
+        <div class="brand-mark">В</div>
+        <div>
+          <span class="brand-title">вЕзи</span>
+          <span class="brand-sub">краудфандинг</span>
+        </div>
+      </a>
+
+      <nav class="main-nav">
+        <a href="index.html" class="nav-link ">Каталог проектов</a>
+        <a href="initiator.html" class="nav-link ">Калькулятор сметы</a>
+        <a href="sponsor.html" class="nav-link active">Кабинет спонсора</a>
+        <a href="moderator.html" class="nav-link ">Модерация</a>
+        <a href="admin.html" class="nav-link ">Администрирование</a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="theme-switch">
+          <button type="button" class="theme-btn active" data-mode="light" onclick="setTheme('light')">Светлая</button>
+          <button type="button" class="theme-btn" data-mode="dark" onclick="setTheme('dark')">Тёмная</button>
+        </div>
+        <div id="headerUserArea" style="display:flex;align-items:center;gap:8px;"></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-bottom:40px;">
+    <div class="cabinet-layout">
+      <aside class="panel">
+        <div style="font-size:11px;font-weight:700;color:var(--text-muted);margin-bottom:14px;">ЛИЧНЫЙ КАБИНЕТ СПОНСОРА</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:24px;">
+          <a href="sponsor.html" class="btn btn-primary" style="justify-content:flex-start;">Мои вклады и заказы</a>
+          <a href="index.html" class="btn btn-outline" style="justify-content:flex-start;">Каталог кампаний</a>
+        </div>
+
+        <div class="progress-box">
+          <div style="font-size:11px;color:var(--text-muted);">Зарезервировано на счёте</div>
+          <div style="font-size:22px;font-weight:800;margin:4px 0;" id="sponsorTotalHold">15 000 ₽</div>
+          <span class="badge badge-amber">Резервирование активно</span>
+          <hr style="border:none;border-top:1px solid var(--border);margin:12px 0;">
+          <div style="font-size:11px;color:var(--text-sec);">
+            Средства перечисляются автору только при сборе 100% цели. При недостижении цели — полный возврат.
+          </div>
+        </div>
+      </aside>
+
+      <section>
+        <div class="kpi-grid-3">
+          <div class="kpi-card">
+            <div class="kpi-card-label">Мои вклады</div>
+            <div class="kpi-card-val" id="sponsorProjectsCount">3 вклада</div>
+            <div class="kpi-card-sub">Записаны в базу данных</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-card-label">Ожидается доставка</div>
+            <div class="kpi-card-val" style="color:var(--accent);">3 вознаграждения</div>
+            <div class="kpi-card-sub">Тираж забронирован за вами</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-card-label">Возвращено средств</div>
+            <div class="kpi-card-val" style="color:var(--blue);">0 ₽</div>
+            <div class="kpi-card-sub">Нет отменённых сборов</div>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-bottom:20px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+            <h2 class="panel-title" style="margin:0;">Мои вклады и статус платежей</h2>
+            <a href="index.html" class="btn btn-outline" style="font-size:12px;padding:6px 12px;">+ Поддержать ещё проект</a>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Проект</th>
+                  <th>Выбранное вознаграждение</th>
+                  <th>Сумма</th>
+                  <th>Статус средств</th>
+                  <th>Дата операции</th>
+                </tr>
+              </thead>
+              <tbody id="sponsorPaymentsTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="two-col-layout" style="margin-top:0;">
+          <div class="panel">
+            <h3 class="panel-title">Статус доставки вознаграждений</h3>
+            <p class="panel-sub">Забронированные позиции из таблицы вознаграждений</p>
+            <div id="sponsorDeliveriesList"></div>
+          </div>
+
+          <div class="panel">
+            <h3 class="panel-title">Контроль обязательств</h3>
+            <p class="panel-sub">Если автор задерживает отчёт по этапу более 30 дней, вы можете направить обращение модератору.</p>
+            <div class="progress-box" style="margin-bottom:16px;">
+              <div style="font-weight:700;color:var(--accent);font-size:13px;">Проект «вЕзи» выполняется по графику</div>
+              <div style="font-size:12px;color:var(--text-sec);margin-top:4px;">Первый этап закрыт с отчётом 15.11.2026. Просрочек нет.</div>
+            </div>
+            <button type="button" class="btn btn-danger" style="width:100%;" onclick="alert('Обращение зарегистрировано и передано в очередь модератора.')">
+              Сообщить о нарушении сроков
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>Платформа «вЕзи» • Хранение данных на территории РФ • Расчёты через номинальные счета</div>
+      <div style="display:flex;gap:14px;">
+        <button type="button" class="btn btn-outline" style="padding:5px 10px;font-size:11px;" onclick="downloadDBJson()">Скачать файл db.json</button>
+        <button type="button" class="btn btn-outline" style="padding:5px 10px;font-size:11px;" onclick="resetDB()">Сбросить тестовые данные</button>
+      </div>
+    </div>
+  </footer>
+
+  <nav class="mobile-tabbar">
+    <a href="index.html" class="tabbar-item ">Каталог</a>
+    <a href="initiator.html" class="tabbar-item ">Калькулятор</a>
+    <a href="sponsor.html" class="tabbar-item active">Вклады</a>
+    <a href="moderator.html" class="tabbar-item ">Модерация</a>
+    <a href="login.html" class="tabbar-item ">Профиль</a>
+  </nav>
+  <script src="js/db.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
